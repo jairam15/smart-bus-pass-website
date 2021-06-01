@@ -1,0 +1,21 @@
+{
+    "/api/*": {
+        "target": "http://smart-bus-pass.herokuapp.com/api/login",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+            "^/api": ""
+          }
+    },
+
+    "/reg/*": {
+        "target": "http://smart-bus-pass.herokuapp.com/api/user_registration",
+        "secure": false,
+        "changeOrigin": true,
+        "logLevel": "debug",
+        "pathRewrite": {
+            "^/reg": ""
+          }
+    }
+}

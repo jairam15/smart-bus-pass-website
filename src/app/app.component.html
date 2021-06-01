@@ -1,0 +1,199 @@
+<!--<div class="container" style="max-width: 550px">
+  <h2 class="text-center mb-5">Angular Login with Google</h2>
+
+  <div *ngIf="isLoggedin === false">
+    <div>
+      <button type="button" (click)="loginWithGoogle()" class="btn btn-danger">Login with Google</button>
+    </div>
+  </div>
+
+  <div *ngIf="isRegistered === false">
+    <div class="form-group">
+      <label>First Name</label>
+      <input type="text" class="form-control" [value]="socialUser.firstName" id="firstname">
+    </div>
+    <div class="form-group">
+      <label>Last Name</label>
+      <input type="text" class="form-control" [value]="socialUser.lastName" id="lastname">
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="text" class="form-control" [value]="socialUser.email" id="email">
+    </div>
+
+    <button type="button" (click)="logOut()" class="btn btn-primary">Log Out</button>
+  </div>
+</div>-->
+
+
+
+<div class="container .bg-primary">
+  
+  
+  <div class="row">
+    <div *ngIf="showSpinner === true">
+    <div class="wrapper">
+      
+      </div>
+      <div class="overlay"></div>
+      <div class="spanner show">
+        <div class="loader show"></div>
+        <h2>Logging in, please wait.</h2>
+    </div>
+    </div>
+
+    <div *ngIf="showSpinnerForRegistration === true">
+      <div class="wrapper">
+        
+        </div>
+        <div class="overlay"></div>
+        <div class="spanner show">
+          <div class="loader show"></div>
+          <h2>Registration in progress, please wait.</h2>
+      </div>
+      </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-6" *ngIf="isLoggedin === false">
+      <div class="card cardClass">
+        <div class="card-header bg-primary bg-gradient text-light">
+          Smart Bus Pass
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">Welcome to Smart Bus Pass!</h2>
+          <p class="card-text">Please login to continue.</p>
+          <a href="#" class="btn btn-primary" (click)="loginWithGoogle()">Login with Google</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+
+
+
+
+
+  <div class="row" *ngIf="isRegistered === false">
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+    <div class="card registerCard">
+      <div class="card-body">
+        <h3 class="card-title border-bottom text-danger">Sorry! You are not Registered. Please Register to continue.</h3>
+        <form class="row g-3" #userlogin = "ngForm" >
+      
+          <div class="col-12">
+            <label for="inputAddress" class="form-label" >First Name</label>
+            <input type = "text" class="form-control" name = "firstName" ngModel>
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">Last Name</label>
+            <input type="text" class="form-control" name="lastName" ngModel>
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" name="phoneNumber" ngModel >
+          </div>
+          <div class="col-md-4">
+            <label for="inputState" class="form-label">Are you a student ?</label>
+            <select id="inputState" class="form-select" name="isStudent" ngModel>
+              <option selected>Choose...</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="col-md-8">
+            
+          </div>
+          
+          
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary" (click) = "onClickSubmit(userlogin.value)">Register</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  </div>
+  <div class="col-md-3"></div>
+    
+  </div>
+
+<div *ngIf="registrationSuccessful === true">
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="card registerCardSuccess">
+        <div class="card-header bg-primary bg-gradient text-light">
+          Registration Successful.
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Please login below with your Google Account.</h3>
+          <a href="#" class="btn btn-primary" (click)="loginWithGoogle()" >Login with Google</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  
+</div>
+
+<div *ngIf="registrationFailed === true">
+  <div class="card">
+    <div class="card-header bg-primary bg-gradient text-light">
+      Registration Failed.
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Please refresh this page to try again</h5>
+    </div>
+  </div>
+</div>
+
+  <div *ngIf="showMainPage === true">
+    <nav class="navbar navbar-light bg-primary bg-gradient">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1 text-light">Smart Bus Pass</span>
+      </div>
+    </nav>
+    
+    <div class="row rowchange">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <!--<div class="image"><img src="../assets/qr.png" alt=""></div>-->
+        <div class="image">
+
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <ngx-qrcode 
+           
+                [value]="value"
+                 cssClass="qr"
+                style="height: 100%; width: 100%;"
+                >
+              </ngx-qrcode>
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">First Name : <b>{{firstName}}</b></li>
+                    <li class="list-group-item">Last Name : <b>{{lastName}}</b></li>
+                    <li class="list-group-item">Student : <b>{{isStudent}}</b></li>
+                    <li class="list-group-item">Account Balance : <b>{{accBalance}}</b></li>
+                    <li class="list-group-item">Phone Number: <b>{{phoneNumber}}</b></li>
+                    <li class="list-group-item">Email: <b>{{email}}</b></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          
+        
+      </div>
+        
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+
+  </div>
+</div>
